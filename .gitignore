@@ -1,3 +1,6 @@
 /.idea/
 /.terraform/
 /infra-s3/.terraform/
+/sam-installation/
+/aws-sam-cli-linux-x86_64.zip
+.aws-sam/
