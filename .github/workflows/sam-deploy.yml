@@ -6,15 +6,20 @@ on:
       - main
     paths:
       - 'sam-comprehend/**'
+      - '.github/workflows/sam-deploy.yml'
   pull_request:
     branches:
       - main
     paths:
       - 'sam-comprehend/**'
+      - '.github/workflows/sam-deploy.yml'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults: 
+      run:
+        working-directory: ./sam-comprehend
 
     steps:
       - name: Checkout code
@@ -23,12 +28,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.12'
 
       - name: Set up SAM CLI
         uses: aws-actions/setup-sam@v2
 
+      - name: Validate SAM template
+        run: sam validate
+
+      - name: Build SAM application
+        run: sam build
+
       - name: Configure AWS credentials
+        if: github.event_name == 'push'
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -36,9 +48,9 @@ jobs:
           aws-region: eu-west-1
 
       - name: Deploy SAM application
-        working-directory: ./sam-comprehend
+        if: github.event_name == 'push'
         run: |
           sam deploy \
-            --stack-name aialpha-sentiment-glennbech \
+            --stack-name aialpha-sam-comprehend-61 \
             --no-confirm-changeset \
             --no-fail-on-empty-changeset
