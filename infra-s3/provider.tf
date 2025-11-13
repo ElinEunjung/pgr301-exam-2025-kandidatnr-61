@@ -3,7 +3,7 @@ terraform {
 
   backend "s3" {
     bucket = "pgr301-terraform-state"  
-    key    = "kandidat-61/terraform.tfstate"
+    key    = "kandidat-61-s3.tfstate"
     region = "eu-west-1"
   }
 

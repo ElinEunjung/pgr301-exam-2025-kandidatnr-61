@@ -14,7 +14,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
   bucket = aws_s3_bucket.aialpha_data.id
 
   rule {
-    id     = "temporary_files_cleanup"
+    id     = "midlertidig-files"
     status = "Enabled"
 
     filter {
@@ -22,7 +22,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
     }
 
     transition {
-      days          = var.transition_days
+      days          = var.glacier_transition_days
       storage_class = "GLACIER"
     }
 
