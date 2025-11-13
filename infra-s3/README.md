@@ -17,5 +17,3 @@ terraform apply \
   -var="candidate_id=61" \
   -var="bucket_name=kandidat-61-data"
 ```
-
-# Test
