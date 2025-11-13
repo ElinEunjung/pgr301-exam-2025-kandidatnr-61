@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 1.5.0"
 
   backend "s3" {
-    bucket = "pgr301-terraform-state"  
+    bucket = "pgr301-terraform-state"
     key    = "kandidat-61-s3.tfstate"
     region = "eu-west-1"
   }
