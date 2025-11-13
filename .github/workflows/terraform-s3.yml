@@ -1,0 +1,45 @@
+name: Terraform S3 Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'infra-s3/**'
+      - '.github/**'
+  pull_request:
+    paths:
+      - 'infra-s3/**'
+      - '.github/**'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.7
+
+      - name: Terraform Format Check
+        run: terraform -chdir=infra-s3 fmt -check
+
+      - name: Terraform Init
+        run: terraform -chdir=infra-s3 init
+
+      - name: Terraform Validate
+        run: terraform -chdir=infra-s3 validate
+
+      - name: Terraform Plan (PR only)
+        if: github.event_name == 'pull_request'
+        run: terraform -chdir=infra-s3 plan
+
+      - name: Terraform Apply (main branch)
+        if: github.ref == 'refs/heads/main'
+        run: terraform -chdir=infra-s3 apply -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
