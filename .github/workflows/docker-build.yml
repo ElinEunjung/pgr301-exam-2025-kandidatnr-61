@@ -1,7 +1,8 @@
 name: Build & Push Docker image
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
     paths:
       - 'sentiment-docker/**'
       - '.github/workflows/docker-build.yml' 
