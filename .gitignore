@@ -3,4 +3,5 @@
 /infra-s3/.terraform/
 /sam-installation/
 /aws-sam-cli-linux-x86_64.zip
-.aws-sam/
+/sam-comprehend/.aws-sam
+/sentiment-docker/target
