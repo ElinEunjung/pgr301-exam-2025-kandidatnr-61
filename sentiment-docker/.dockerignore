@@ -1,0 +1,19 @@
+# Maven build artifacts
+target/
+
+# Git files
+.git
+.gitignore
+
+# IDE and editor settings
+.idea/
+.vscode/
+
+# OS-specific junk
+*.log
+*.DS_Store
+Thumbs.db
+
+# Temporary or local files
+*.iml
+*.tmp

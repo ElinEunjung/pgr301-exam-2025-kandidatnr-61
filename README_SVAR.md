@@ -19,5 +19,15 @@ For å kjøre workflowen i din egen GitHub-repository, legg inn `AWS_ACCESS_KEY_
 
 
 # Oppgave 3
+## Del A
+`sentiment-docker/Dockerfile` 
+
+## Del B
+- Workflow-fil: 
+- Successful build: 
+- Tagging-strategi:
+- Container image navn:
+- Beskrivelse for sensor:
+
 # Oppgave 4
 # Oppgave 5
