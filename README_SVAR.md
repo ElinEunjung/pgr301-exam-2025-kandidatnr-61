@@ -45,4 +45,10 @@ For at `.github/workflows/docker-build.yml` skal fungeres i sensor sin fork, må
 Siden image-taggen bygges ut fra `DOCKER_USERNAME`-secret, trenger sensor kun å konfigurere egne secrets. Workflow-filen kan brukes uendret. 
 
 # Oppgave 4
+## Del A
+## Del B
+- Terraform-kode: 
+- Dashboard Screenshot: 
+- Alarm Screenshot: 
+- E-post Screenshot:
 # Oppgave 5

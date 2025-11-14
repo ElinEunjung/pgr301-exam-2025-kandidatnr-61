@@ -2,6 +2,9 @@ package com.aialpha.sentiment.metrics;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Counter;
+
+import java.util.Timer;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,6 +32,8 @@ public class SentimentMetrics {
 
     public void recordDuration(long milliseconds, String company, String model) {
         // TODO: Record timer
+        Timer.builder("milliseconds.duration.total")
+            .tag("")
     }
 
     public void recordCompaniesDetected(int count) {
