@@ -63,20 +63,21 @@ Fra DevOps-perspektiv gjør dette det mulig å overvåke  ytelse, pålitelighet 
 - Terraform-kode: kode ligger i `infra-cloudwatch/`
 
 - Dashboard Screenshot:
- ![Dashboard](image/dashboard-oppgave4B.jpg)
  Dashboardet er definert i Terraform og viser to widgets (latency + gauge) som en timeSerie-graf og en singleValue (kun siste verdi). CloudWatch kan vise tomme grafer hvis applikasjonen nylig er startet eller har lite datapunkter, men dashboard-strukturen bekrefter at metrikker er riktig konfigurert og visualisert i henhold til oppgaven.
+ ![Dashboard](image/dashboard-oppgave4B.jpg)
+
 
 - Alarm Screenshot: 
-![Alarm](image/alarm-oppgave4B.jpg)
 Skjermbildet viser min alarm `kandidat61-sentiment-latency-high`, som overvåker metrikken `sentiment.api.latency` (Average). Alarmen går i ALARM dersom latensen overskrider en terskel på 2 sekunder. 2 sekunder er en rimelig terskel for en responsiv AI-tjeneste i et DevOps-miljø. 
+![Alarm](image/alarm-oppgave4B.jpg)
 
-![Alarm 2](image/alarm-oppgave4B-2.jpg)
-Alarmen `kandidat61-sentiment-api-latency-high` er konfigurert med en SNS-notifikasjon. Når alarmen går i *ALARM*, sendes det en melding til SNS-topic `kandidat61-sentiment-alerts`, som igjen er koblet til en e-post-subscription(på skjermbildet: “Pending confirmation”). Dette viser at alarm actions er
+- Alarmen `kandidat61-sentiment-api-latency-high` er konfigurert med en SNS-notifikasjon. Når alarmen går i *ALARM*, sendes det en melding til SNS-topic `kandidat61-sentiment-alerts`, som igjen er koblet til en e-post-subscription(på skjermbildet: “Pending confirmation”). Dette viser at alarm actions er
 korrekt konfigurert i Terraform og klart til å sende varsler.
+![Alarm 2](image/alarm-oppgave4B-2.jpg)
+
 
 - E-post Screenshot:
 Nedenfor vises skjermbildet av e-posten jeg mottok fra AWS SNS for å bekrefte subscription til topic `kandidat61-sentiment-alerts`
-
 ![SNS Email Confirmation](image/sns-email-oppgave4B.jpg)
 
 
