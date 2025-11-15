@@ -44,11 +44,41 @@ For at `.github/workflows/docker-build.yml` skal fungeres i sensor sin fork, må
         Siden `workflow_dispatch` er aktivert, kan workflowen startes uten at det gjøres endringer i `sentiment-docker/**` i `main` branch
 Siden image-taggen bygges ut fra `DOCKER_USERNAME`-secret, trenger sensor kun å konfigurere egne secrets. Workflow-filen kan brukes uendret. 
 
+
 # Oppgave 4
 ## Del A
+![CloudWatch Metrics-konsoll](image/cloudwatch-metrics-console-oppgave4A.jpg)
+
+For design har jeg valgt å bruke fire metrics i `SentimentMetrics`:
+- Counter `sentiment.analysis.total`: teller analyser per sentiment og selskap
+- Timer `sentiment.api.latency`: måler responstid til Bedrock API per selskap og modell
+- Gauge `sentiment.companies.detected`: antall selskaper som ble funnet i siste forespørsel
+- DistributionSummary `sentiment.confidence.distribution`: viser fordeling av confidence-verdier
+
+Disse metrics registreres fra `SentimentController.analizeSentimet()` etter at Bedrock API-kallet er feridg.
+
+Fra DevOps-perspektiv gjør dette det mulig å overvåke  ytelse, pålitelighet og modellkvalitet gjennom trafikk (bruk), latency (ytelse), antall selskaper per forespørsel (kompeksitet) og confidence-score (modellkvalitet). Alle metrics eksporteres til CloudWatch under namespace `kandidat61`. 
+
 ## Del B
-- Terraform-kode: 
-- Dashboard Screenshot: 
+- Terraform-kode: kode ligger i `infra-cloudwatch/`
+
+- Dashboard Screenshot:
+ ![Dashboard](image/dashboard-oppgave4B.jpg)
+ Dashboardet er definert i Terraform og viser to widgets (latency + gauge) som en timeSerie-graf og en singleValue (kun siste verdi). CloudWatch kan vise tomme grafer hvis applikasjonen nylig er startet eller har lite datapunkter, men dashboard-strukturen bekrefter at metrikker er riktig konfigurert og visualisert i henhold til oppgaven.
+
 - Alarm Screenshot: 
+![Alarm](image/alarm-oppgave4B.jpg)
+Skjermbildet viser min alarm `kandidat61-sentiment-latency-high`, som overvåker metrikken `sentiment.api.latency` (Average). Alarmen går i ALARM dersom latensen overskrider en terskel på 2 sekunder. 2 sekunder er en rimelig terskel for en responsiv AI-tjeneste i et DevOps-miljø. 
+
+![Alarm 2](image/alarm-oppgave4B-2.jpg)
+Alarmen `kandidat61-sentiment-api-latency-high` er konfigurert med en SNS-notifikasjon. Når alarmen går i *ALARM*, sendes det en melding til SNS-topic `kandidat61-sentiment-alerts`, som igjen er koblet til en e-post-subscription(på skjermbildet: “Pending confirmation”). Dette viser at alarm actions er
+korrekt konfigurert i Terraform og klart til å sende varsler.
+
 - E-post Screenshot:
+Nedenfor vises skjermbildet av e-posten jeg mottok fra AWS SNS for å bekrefte subscription til topic `kandidat61-sentiment-alerts`
+
+![SNS Email Confirmation](image/sns-email-oppgave4B.jpg)
+
+
+
 # Oppgave 5

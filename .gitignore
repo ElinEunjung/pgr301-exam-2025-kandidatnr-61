@@ -1,6 +1,8 @@
 /.idea/
 /.terraform/
 /infra-s3/.terraform/
+/infra-cloudwatch/.terraform/
+/infra-cloudwatch/terraform.tfstate
 /sam-installation/
 /aws-sam-cli-linux-x86_64.zip
 /sam-comprehend/.aws-sam
