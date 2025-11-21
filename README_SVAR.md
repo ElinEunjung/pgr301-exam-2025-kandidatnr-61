@@ -79,7 +79,7 @@ korrekt konfigurert i Terraform og klart til å sende varsler.
 
 
 - E-post Screenshot:
-Nedenfor vises skjermbildet av e-posten jeg mottok fra AWS SNS for å bekrefte subscription til topic `kandidat61-sentiment-alerts`
+Nedenfor vises skjermbildet av e-posten jeg mottok fra AWS SNS for å bekrefte subscription til topic `kandidat61-sentiment-alerts` <br>
 ![SNS Email Confirmation](image/sns-email-oppgave4B.jpg)
 
 
