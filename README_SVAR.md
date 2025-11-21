@@ -36,12 +36,12 @@ Hver build til main publiserer imaget som `latest` (siste versjon for enkel test
 - Beskrivelse for sensor:
 For at `.github/workflows/docker-build.yml` skal fungeres i sensor sin fork, må sensor gjøre følende.
   1. Opprette en egen Docker Hub-konto og repository.
-  2. Lage et Docker Hub access token med *read & write*-tilgang
+  2. Lage et Docker Hub access token med *read & write*-tilgang.
   3. Legge inn Github Secrets i sin fork: 
     - `DOCKER_USERNAME` = sensor sin Docker Hub-bruker
     - `DOCKER_TOKEN` = access token fra Docker Hub
-  4. Aktiver GitHub Actions og trigge workflow
-        Siden `workflow_dispatch` er aktivert, kan workflowen startes uten at det gjøres endringer i `sentiment-docker/**` i `main` branch
+  4. Aktiver GitHub Actions og trigge workflow. <br>
+        Siden `workflow_dispatch` er aktivert, kan workflowen startes uten at det gjøres endringer i `sentiment-docker/**` i `main` branch.
 Siden image-taggen bygges ut fra `DOCKER_USERNAME`-secret, trenger sensor kun å konfigurere egne secrets. Workflow-filen kan brukes uendret. 
 
 
