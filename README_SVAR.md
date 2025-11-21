@@ -51,15 +51,11 @@ Siden image-taggen bygges ut fra `DOCKER_USERNAME`-secret, trenger sensor kun å
 ## Del A
 ![CloudWatch Metrics-konsoll](image/cloudwatch-metrics-console-oppgave4A.jpg)
 
-For design har jeg valgt å bruke fire metrics i `SentimentMetrics`:
-- Counter `sentiment.analysis.total`: teller analyser per sentiment og selskap
-- Timer `sentiment.api.latency`: måler responstid til Bedrock API per selskap og modell
-- Gauge `sentiment.companies.detected`: antall selskaper som ble funnet i siste forespørsel
-- DistributionSummary `sentiment.confidence.distribution`: viser fordeling av confidence-verdier
-
-Disse metrics registreres fra `SentimentController.analizeSentimet()` etter at Bedrock API-kallet er feridg.
-
-Fra DevOps-perspektiv gjør dette det mulig å overvåke  ytelse, pålitelighet og modellkvalitet gjennom trafikk (bruk), latency (ytelse), antall selskaper per forespørsel (kompeksitet) og confidence-score (modellkvalitet). Alle metrics eksporteres til CloudWatch under namespace `kandidat61`. 
+- Jeg implementerte fire metrikker i SentimentMetrics, valgt for å dekke både trafikk, ytelse og modellkvalitet: 
+**Counter** `analysis.total.count` for å telle analyser (alltid økende), **Timer** `api.latency.sum` for å måle Bedrock-latens (egnet til å fange ytelsesproblemer), 
+**Gauge** `companies.detected.value` for antall selskaper per forespørsel (verdi som varierer begge veier), 
+og **DistributionSummary** `confidence.distribution.avg` for fordelingen av confidence-verdier (modellkvalitet over tid).
+  Alle metrikker registreres etter fullført Bedrock-kall og eksporteres til CloudWatch under `kandidat61`. Denne kombinasjonen gir et balansert observability-grunnlag: trafikk, runtime-kostnader, input-kompleksitet og kvalitet.
 
 ## Del B
 - Terraform-kode: kode ligger i `infra-cloudwatch/`
@@ -70,7 +66,11 @@ Fra DevOps-perspektiv gjør dette det mulig å overvåke  ytelse, pålitelighet 
 
 
 - Alarm Screenshot: 
-Skjermbildet viser min alarm `kandidat61-sentiment-latency-high`, som overvåker metrikken `sentiment.api.latency` (Average). Alarmen går i ALARM dersom latensen overskrider en terskel på 2 sekunder. 2 sekunder er en rimelig terskel for en responsiv AI-tjeneste i et DevOps-miljø. 
+Skjermbildet viser min alarm `kandidat61-sentiment-latency-high`, som overvåker metrikken `sentiment.api.latency` (Average). 
+Alarmen går i ALARM dersom latensen overskrider en terskel på 2 sekunder. Jeg valgte 2 sekunder som alarmterskel 
+fordi normale Bedrock-kall ligger under 1 sekund. Over 2 sekunder tyder derfor på ytelsesdegradering som nettverk, 
+throttling eller ressursmangel, samtidig som terskelen er høy nok til å unngå falske alarmer.
+
 ![Alarm](image/alarm-oppgave4B.jpg)
 
 - Alarmen `kandidat61-sentiment-api-latency-high` er konfigurert med en SNS-notifikasjon. Når alarmen går i *ALARM*, sendes det en melding til SNS-topic `kandidat61-sentiment-alerts`, som igjen er koblet til en e-post-subscription(på skjermbildet: “Pending confirmation”). Dette viser at alarm actions er
