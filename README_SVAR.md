@@ -81,5 +81,4 @@ Nedenfor vises skjermbildet av e-posten jeg mottok fra AWS SNS for å bekrefte s
 ![SNS Email Confirmation](image/sns-email-oppgave4B.jpg)
 
 
-
 # Oppgave 5

@@ -6,10 +6,12 @@ on:
     paths:
       - 'infra-s3/**'
       - '.github/workflows/terraform-s3.yml'
+      - '.github/**'
   pull_request:
     paths:
       - 'infra-s3/**'
       - '.github/workflows/terraform-s3.yml'
+      - '.github/**'
 
 jobs:
   terraform:
